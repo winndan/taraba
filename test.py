@@ -1,16 +1,15 @@
-# main.py
-
-from fastapi import FastAPI
+from fasthtml.common import *
 from mcpServer import mcp  # Import the initialized FastMCP instance
 
-app = FastAPI()
 
-# Mount MCP server as a sub-application at /subapi
-app.mount("/subapi", mcp.sse_app())  # MCP uses Server-Sent Events here
+app = FastHTML(routes=[
+        Mount('/subapi', app=mcp.sse_app()),
+    ])
 
+#app.mount("/subapi", mcp.sse_app()) 
 
 # ✅ Root route
-@app.get("/app")
+@app.get("/")
 def read_main():
     return {"message": "Hello World from main app"}
 
@@ -26,3 +25,4 @@ def read_sub():
 def read_subapi_test():
     return {"message": "Hello World from sub2 (FastAPI side)"}
 
+serve()
