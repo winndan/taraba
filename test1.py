@@ -1,4 +1,3 @@
-# server.py
 from mcp.server.fastmcp import FastMCP
 
 # Create an MCP server
@@ -21,16 +20,19 @@ def get_static_resource() -> str:
     """Static resource data"""
     return "Any static data can be returned"
 
+
 # Add a dynamic greeting resource
 @mcp.resource("greeting://{name}")
 def get_greeting(name: str) -> str:
     """Get a personalized greeting"""
     return f"Hello, {name}!"
 
+
 #### Prompts ####
 @mcp.prompt()
 def review_code(code: str) -> str:
     return f"Please review this code:\n\n{code}"
+
 
 @mcp.prompt()
 def debug_error(error: str) -> list[tuple]:
@@ -40,9 +42,7 @@ def debug_error(error: str) -> list[tuple]:
         ("assistant", "I'll help debug that. What have you tried so far?"),
     ]
 
+
 if __name__ == "__main__":
     # Initialize and run the server
     mcp.run(transport='sse')
-
-# Expose mcp instance for import
-__all__ = ["mcp"]
